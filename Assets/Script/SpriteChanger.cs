@@ -4,21 +4,31 @@ using UnityEngine.InputSystem;
 public class SpriteChanger : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
-    public Sprite[] sprites;
+    public Color[] colors;
 
     private int index = 0;
 
-    public void ChangeSprite(InputAction.CallbackContext context)
+    void Start()
     {
-        // Only for press
-        if (!context.performed) return;
+        if (colors.Length > 0)
+        {
+            spriteRenderer.color = colors[0];
+        }
+    }
+
+    public void ChangeColor(InputAction.CallbackContext context)
+    {
+        Debug.Log("ChangeColor called");
+
+        if (!context.started) return;
 
         index++;
-        if (index >= sprites.Length)
+
+        if (index >= colors.Length)
         {
             index = 0;
         }
 
-        spriteRenderer.sprite = sprites[index];
+        spriteRenderer.color = colors[index];
     }
 }
