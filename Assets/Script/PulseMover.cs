@@ -8,21 +8,29 @@ public class PulseMover : MonoBehaviour
     public AnimationCurve yCurve;
 
     private float xPos = 0f;
+    private TrailRenderer trail;
+
+    void Start()
+    {
+        trail = GetComponent<TrailRenderer>();
+    }
 
     void Update()
     {
-        // X移动
         xPos += speed * Time.deltaTime;
 
         if (xPos > screenWidth)
         {
+
+            trail.enabled = false;
+
             xPos = 0f;
+
+
+            trail.enabled = true;
         }
 
-        // 归一化时间（0~1）
         float t = xPos / screenWidth;
-
-        // 用 curve 控制 Y
         float y = yCurve.Evaluate(t) * 3f;
 
         transform.position = new Vector3(xPos, y, 0f);
